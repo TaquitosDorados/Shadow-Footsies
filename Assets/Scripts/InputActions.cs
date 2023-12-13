@@ -28,21 +28,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             ""id"": ""1e767c0a-257a-44ea-abfa-b624ef732685"",
             ""actions"": [
                 {
-                    ""name"": ""Dash Forward"",
+                    ""name"": ""Dash"",
                     ""type"": ""Button"",
                     ""id"": ""560b58cf-a79b-4cef-b938-1b9c12f3f3d4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""MultiTap"",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Dash Backwards"",
-                    ""type"": ""Button"",
-                    ""id"": ""b1999f90-4ed2-4038-84de-4faa6ed339c6"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": ""MultiTap"",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -90,7 +81,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dash Forward"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -101,29 +92,29 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dash Forward"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a3e84628-d56c-49c4-89b4-1ca8d0231ffd"",
+                    ""id"": ""2af190ee-37bb-41ad-a7f7-7d9dbe42947b"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dash Backwards"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b9f5a1ce-056c-4cbe-a386-7d033a5514bf"",
+                    ""id"": ""23e26eea-b30e-45c2-ba1a-33cd16738442"",
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Dash Backwards"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -255,8 +246,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
 }");
         // Player 1
         m_Player1 = asset.FindActionMap("Player 1", throwIfNotFound: true);
-        m_Player1_DashForward = m_Player1.FindAction("Dash Forward", throwIfNotFound: true);
-        m_Player1_DashBackwards = m_Player1.FindAction("Dash Backwards", throwIfNotFound: true);
+        m_Player1_Dash = m_Player1.FindAction("Dash", throwIfNotFound: true);
         m_Player1_Attack = m_Player1.FindAction("Attack", throwIfNotFound: true);
         m_Player1_Special = m_Player1.FindAction("Special", throwIfNotFound: true);
         m_Player1_Movement = m_Player1.FindAction("Movement", throwIfNotFound: true);
@@ -322,8 +312,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     // Player 1
     private readonly InputActionMap m_Player1;
     private List<IPlayer1Actions> m_Player1ActionsCallbackInterfaces = new List<IPlayer1Actions>();
-    private readonly InputAction m_Player1_DashForward;
-    private readonly InputAction m_Player1_DashBackwards;
+    private readonly InputAction m_Player1_Dash;
     private readonly InputAction m_Player1_Attack;
     private readonly InputAction m_Player1_Special;
     private readonly InputAction m_Player1_Movement;
@@ -332,8 +321,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     {
         private @InputActions m_Wrapper;
         public Player1Actions(@InputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @DashForward => m_Wrapper.m_Player1_DashForward;
-        public InputAction @DashBackwards => m_Wrapper.m_Player1_DashBackwards;
+        public InputAction @Dash => m_Wrapper.m_Player1_Dash;
         public InputAction @Attack => m_Wrapper.m_Player1_Attack;
         public InputAction @Special => m_Wrapper.m_Player1_Special;
         public InputAction @Movement => m_Wrapper.m_Player1_Movement;
@@ -347,12 +335,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_Player1ActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_Player1ActionsCallbackInterfaces.Add(instance);
-            @DashForward.started += instance.OnDashForward;
-            @DashForward.performed += instance.OnDashForward;
-            @DashForward.canceled += instance.OnDashForward;
-            @DashBackwards.started += instance.OnDashBackwards;
-            @DashBackwards.performed += instance.OnDashBackwards;
-            @DashBackwards.canceled += instance.OnDashBackwards;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
@@ -369,12 +354,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IPlayer1Actions instance)
         {
-            @DashForward.started -= instance.OnDashForward;
-            @DashForward.performed -= instance.OnDashForward;
-            @DashForward.canceled -= instance.OnDashForward;
-            @DashBackwards.started -= instance.OnDashBackwards;
-            @DashBackwards.performed -= instance.OnDashBackwards;
-            @DashBackwards.canceled -= instance.OnDashBackwards;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
@@ -406,8 +388,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     public Player1Actions @Player1 => new Player1Actions(this);
     public interface IPlayer1Actions
     {
-        void OnDashForward(InputAction.CallbackContext context);
-        void OnDashBackwards(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnSpecial(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);

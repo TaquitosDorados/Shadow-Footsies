@@ -6,21 +6,12 @@
             "id": "1e767c0a-257a-44ea-abfa-b624ef732685",
             "actions": [
                 {
-                    "name": "Dash Forward",
+                    "name": "Dash",
                     "type": "Button",
                     "id": "560b58cf-a79b-4cef-b938-1b9c12f3f3d4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "MultiTap",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Dash Backwards",
-                    "type": "Button",
-                    "id": "b1999f90-4ed2-4038-84de-4faa6ed339c6",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "MultiTap",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 },
                 {
@@ -68,7 +59,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash Forward",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -79,29 +70,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash Forward",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "a3e84628-d56c-49c4-89b4-1ca8d0231ffd",
+                    "id": "2af190ee-37bb-41ad-a7f7-7d9dbe42947b",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash Backwards",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "b9f5a1ce-056c-4cbe-a386-7d033a5514bf",
+                    "id": "23e26eea-b30e-45c2-ba1a-33cd16738442",
                     "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash Backwards",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

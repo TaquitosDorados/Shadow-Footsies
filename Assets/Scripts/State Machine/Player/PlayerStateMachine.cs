@@ -12,6 +12,7 @@ public class PlayerStateMachine : MonoBehaviour
     private PlayerState lockState = new LockState();
     private PlayerState hitState = new HitState();
     private PlayerState deadState = new DeadState();
+    private PlayerState winState = new WinState();
 
     public PlayerScript playerScript => m_playerScript;
 
@@ -19,6 +20,7 @@ public class PlayerStateMachine : MonoBehaviour
     public PlayerState LockState => lockState;
     public PlayerState HitState => hitState;
     public PlayerState DeadState => deadState;
+    public PlayerState WinState => winState;
 
     public float blockStunned, hitStunned;
 

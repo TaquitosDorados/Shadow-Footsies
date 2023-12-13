@@ -6,16 +6,17 @@ public class DeadState : PlayerState
 {
     public override void OnEnter(PlayerStateMachine machine)
     {
-        throw new System.NotImplementedException();
+        Debug.Log("muerto " + machine.gameObject.name);
+        machine.playerScript.Defeat();
     }
 
     public override void OnExit(PlayerStateMachine machine)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public override void OnUpdate(PlayerStateMachine machine)
     {
-        throw new System.NotImplementedException();
+
     }
 }

@@ -11,8 +11,11 @@ public class InputManager : MonoBehaviour
     public static event Action DashB;
     public static event Action Attack;
     public static event Action Special;
+    public static event Action SpecialStopped;
     #endregion
     private InputActions inputActions;
+    private bool dashChecker;
+    private float lastDirectionX;
 
     public Vector2 movementInput;
 
@@ -32,10 +35,10 @@ public class InputManager : MonoBehaviour
     private void Start()
     {
         inputActions.Player1.Movement.performed += ctx => movement(ctx);
-        inputActions.Player1.DashForward.performed += ctx => DashForward(ctx);
-        inputActions.Player1.DashBackwards.performed += ctx => DashBackwards(ctx);
+        inputActions.Player1.Dash.started += ctx => checkForDash(ctx);
         inputActions.Player1.Attack.performed += ctx => startAttack(ctx);
         inputActions.Player1.Special.performed += ctx => startSpecial(ctx);
+        inputActions.Player1.Special.canceled += ctx => endSpecial(ctx);
 
         inputActions.Player1.Debugger.performed += ctx => StartDebug(ctx);
     }
@@ -43,6 +46,33 @@ public class InputManager : MonoBehaviour
     void movement(InputAction.CallbackContext context)
     {
         movementInput = inputActions.Player1.Movement.ReadValue<Vector2>();
+    }
+
+    void checkForDash(InputAction.CallbackContext context)
+    {
+        StopAllCoroutines();
+        if(dashChecker)
+        {
+            dashChecker = false;
+            if(lastDirectionX > 0 && inputActions.Player1.Movement.ReadValue<Vector2>().x > 0)
+            {
+                DashForward(context);
+            } else if(lastDirectionX < 0 && inputActions.Player1.Movement.ReadValue<Vector2>().x < 0)
+            {
+                DashBackwards(context);
+            }
+        } else
+        {            
+            lastDirectionX = inputActions.Player1.Movement.ReadValue<Vector2>().x;
+            dashChecker = true;
+            StartCoroutine(dashCheckerLife());
+        }
+    }
+
+    IEnumerator dashCheckerLife()
+    {
+        yield return new WaitForSeconds(0.3f);
+        dashChecker = false;
     }
 
     void DashForward(InputAction.CallbackContext context)
@@ -65,8 +95,13 @@ public class InputManager : MonoBehaviour
         Special?.Invoke();
     }
 
+    void endSpecial(InputAction.CallbackContext context)
+    {
+        SpecialStopped?.Invoke();
+    }
+
     void StartDebug(InputAction.CallbackContext context)
     {
-        GetComponent<PlayerScript>().hasBeenHit(1, 2);
+        GetComponent<PlayerScript>().hasBeenHit(0.5f,0.5f);
     }
 }
